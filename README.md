@@ -1,70 +1,186 @@
-# Getting Started with Create React App
+# example-react-sg-modules
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+> Example CRUD with packge react-sg-modules
 
-## Available Scripts
+[![NPM](https://img.shields.io/npm/v/react-sg-modules.svg)](https://www.npmjs.com/package/react-sg-modules) [![JavaScript Style Guide](https://img.shields.io/badge/code_style-standard-brightgreen.svg)](https://standardjs.com)
 
-In the project directory, you can run:
 
-### `npm start`
+SET API USE IN index.js
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+```javascript
+  import { setApiBaseUrl } from '@sygnalgroup/react-sg-modules'
+  setApiBaseUrl('https://crudcrud.com/api/a1cf21cf15b74a2387f6e8cf62a00502')
+```
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+TO USE THE HOOK METHODS USE PROVIDER
 
-### `npm test`
+```javascript
+  import { Provider } from '@sygnalgroup/react-sg-modules'
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+  <Provider>
+    <App />
+  </Provider>
 
-### `npm run build`
+```
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+CRUD POSTS EXAMPLE
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+## POSTS MODULE
+```javascript
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+import { api } from '@sygnalgroup/react-sg-modules';
 
-### `npm run eject`
+export const postsModule = 'posts';
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+const loadingStates = {
+  start: { loading: true },
+  error: { loading: false },
+  success: { loading: false },
+};
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+const actions = {
+  getPosts: {
+    module: postsModule,
+    name: 'getPosts',
+    api: () => api.get('/posts'),
+    params: {
+      start: ['params'],
+      error: ['error'],
+      success: ['data'],
+    },
+    state: loadingStates,
+  },
+  addPost: {
+    module: postsModule,
+    name: 'addPost',
+    api: (data) => api.post('/posts', data),
+    params: {
+      start: ['params'],
+      error: ['error'],
+      success: [''],
+    },
+    state: loadingStates,
+  },
+  editPost: {
+    module: postsModule,
+    name: 'editPost',
+    api: (data) => api.put(`/posts/${data.id}`, data),
+    params: {
+      start: ['params'],
+      error: ['error'],
+      success: [''],
+    },
+    state: loadingStates,
+  },
+  removePost: {
+    module: postsModule,
+    name: 'removePost',
+    api: (id) => api.delete(`/posts/${id}`),
+    params: {
+      start: ['params'],
+      error: ['error'],
+      success: [''],
+    },
+    state: loadingStates,
+  },
+};
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+const posts = {
+  actions,
+  state: {
+    loadingPosts: false,
+    data: [],
+  },
+}
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+export default posts;
 
-## Learn More
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+```
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+## POSTS VIEW
+```javascript
+import React, { useEffect, useState } from 'react';
+import { useActions, useSelectors } from '@sygnalgroup/react-sg-modules';
+import { postsModule } from '../modules/posts';
+import Modules from '../modules';
+import imgLoading from '../loading.gif';
 
-### Code Splitting
+const Posts = () => {
+  const { request } = useActions();
+  const { data, loading } = useSelectors(postsModule);
+  const [postData, setPostData] = useState({});
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+  const loadData = () => {
+    request({
+      action: Modules.posts.actions.getPosts,
+    })
+  }
 
-### Analyzing the Bundle Size
+  const savePost = () => {
+    request({
+      action: postData.id ? Modules.posts.actions.editPost : Modules.posts.actions.addPost,
+      data: postData,
+      options: {
+        onSuccess: () => {
+          setPostData({});
+          loadData();
+        },
+        onError: () => {
+          alert('error')
+        },
+      }
+    })
+  }
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+  const remove = (id) => {
+    request({
+      action: Modules.posts.actions.removePost,
+      data: id,
+      options: {
+        onSuccess: () => {
+          setPostData({});
+          loadData();
+        },
+        onError: () => {
+          alert('error')
+        },
+      }
+    })
+  }
 
-### Making a Progressive Web App
+  useEffect(() => {
+    loadData();
+  }, [])
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+  return (
+    <div className="container">
+      <h1>react-sg-modules</h1>
+      <div className="card-form">
+        <input
+          value={postData.title || ''}
+          onChange={(e) => setPostData((prev) => ({...prev, title: e.target.value}))} />
+        <button onClick={() => savePost()}>{postData.id ? 'EDIT' : 'ADD'} </button>
+      </div>
+      <div className="card-table">
+        {loading && <div>
+          <img src={imgLoading} alt='Loading...' width={50} />
+        </div>}
 
-### Advanced Configuration
+        {data && data.map(item => (
+          <div key={item.id}>
+            <div>
+              {item.title}&nbsp;
+              <button onClick={() => setPostData(item)}>edit</button>
+              <button onClick={() => remove(item.id)}>X</button>
+              <hr />
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  )
+}
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+export default Posts;
+```
