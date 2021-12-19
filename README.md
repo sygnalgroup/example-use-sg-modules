@@ -2,7 +2,7 @@
 
 > Example CRUD with packge react-sg-modules
 
-[![NPM](https://img.shields.io/npm/v/react-sg-modules.svg)](https://www.npmjs.com/package/@sygnalgroup/react-sg-modules) [![JavaScript Style Guide](https://img.shields.io/badge/code_style-standard-brightgreen.svg)](https://standardjs.com)
+[![NPM](https://img.shields.io/badge/react--sg--modules-sygnalgroup-green)](https://www.npmjs.com/package/@sygnalgroup/react-sg-modules) [![JavaScript Style Guide](https://img.shields.io/badge/code_style-standard-brightgreen.svg)](https://standardjs.com)
 
 
 SET API USE IN index.js
@@ -43,7 +43,7 @@ const actions = {
     module: postsModule,
     name: 'getPosts',
     api: () => api.get('/posts'),
-    params: {
+    action: {
       start: ['params'],
       error: ['error'],
       success: ['data'],
@@ -54,7 +54,7 @@ const actions = {
     module: postsModule,
     name: 'addPost',
     api: (data) => api.post('/posts', data),
-    params: {
+    action: {
       start: ['params'],
       error: ['error'],
       success: [''],
@@ -65,7 +65,7 @@ const actions = {
     module: postsModule,
     name: 'editPost',
     api: (data) => api.put(`/posts/${data.id}`, data),
-    params: {
+    action: {
       start: ['params'],
       error: ['error'],
       success: [''],
@@ -76,7 +76,7 @@ const actions = {
     module: postsModule,
     name: 'removePost',
     api: (id) => api.delete(`/posts/${id}`),
-    params: {
+    action: {
       start: ['params'],
       error: ['error'],
       success: [''],
