@@ -12,7 +12,7 @@ SET API USE IN index.js
   setApiBaseUrl('https://crudcrud.com/api/a1cf21cf15b74a2387f6e8cf62a00502')
 ```
 
-TO USE THE HOOK METHODS USE PROVIDER
+ADD PROVIDER
 
 ```javascript
   import { Provider } from '@sygnalgroup/react-sg-modules'
@@ -23,7 +23,7 @@ TO USE THE HOOK METHODS USE PROVIDER
 
 ```
 
-CRUD POSTS EXAMPLE
+HOW USE
 
 ## POSTS MODULE
 ```javascript
@@ -44,7 +44,6 @@ const actions = {
     name: 'getPosts',
     api: () => api.get('/posts'),
     action: {
-      start: ['params'],
       error: ['error'],
       success: ['data'],
     },
@@ -55,7 +54,6 @@ const actions = {
     name: 'addPost',
     api: (data) => api.post('/posts', data),
     action: {
-      start: ['params'],
       error: ['error'],
       success: [''],
     },
@@ -66,7 +64,6 @@ const actions = {
     name: 'editPost',
     api: (data) => api.put(`/posts/${data.id}`, data),
     action: {
-      start: ['params'],
       error: ['error'],
       success: [''],
     },
@@ -77,7 +74,6 @@ const actions = {
     name: 'removePost',
     api: (id) => api.delete(`/posts/${id}`),
     action: {
-      start: ['params'],
       error: ['error'],
       success: [''],
     },
@@ -107,18 +103,18 @@ import Modules from '../modules';
 import imgLoading from '../loading.gif';
 
 const Posts = () => {
-  const { request } = useActions();
+  const { dispatch } = useActions();
   const { data, loading } = useSelectors(postsModule);
   const [postData, setPostData] = useState({});
 
   const loadData = () => {
-    request({
+    dispatch({
       action: Modules.posts.actions.getPosts,
     })
   }
 
   const savePost = () => {
-    request({
+    dispatch({
       action: postData.id ? Modules.posts.actions.editPost : Modules.posts.actions.addPost,
       data: postData,
       options: {
@@ -134,7 +130,7 @@ const Posts = () => {
   }
 
   const remove = (id) => {
-    request({
+    dispatch({
       action: Modules.posts.actions.removePost,
       data: id,
       options: {

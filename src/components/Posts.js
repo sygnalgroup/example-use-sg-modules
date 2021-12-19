@@ -18,8 +18,6 @@ const Posts = () => {
     })
   }, [request]);
 
-  console.log(' title', title)
-
   const loadData = () => {
     request({
       action: Modules.posts.actions.getPosts,
