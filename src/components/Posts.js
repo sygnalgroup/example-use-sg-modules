@@ -6,26 +6,26 @@ import imgLoading from '../loading.gif';
 import { appModule } from '../modules/app';
 
 const Posts = () => {
-  const { request } = useActions();
+  const { dispatch } = useActions();
   const { data, loading } = useSelectors(postsModule);
   const { title } = useSelectors(appModule);
   const [postData, setPostData] = useState({});
 
   useEffect(() => {
-    request({
+    dispatch({
       action: Modules.app.actions.setTitle,
       data: 'Posts Title'
     })
-  }, [request]);
+  }, [dispatch]);
 
   const loadData = () => {
-    request({
+    dispatch({
       action: Modules.posts.actions.getPosts,
     })
   }
 
   const savePost = () => {
-    request({
+    dispatch({
       action: postData.id ? Modules.posts.actions.editPost : Modules.posts.actions.addPost,
       data: postData,
       options: {
@@ -41,7 +41,7 @@ const Posts = () => {
   }
 
   const remove = (id) => {
-    request({
+    dispatch({
       action: Modules.posts.actions.removePost,
       data: id,
       options: {
