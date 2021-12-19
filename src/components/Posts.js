@@ -3,11 +3,22 @@ import { useActions, useSelectors } from '@sygnalgroup/react-sg-modules';
 import { postsModule } from '../modules/posts';
 import Modules from '../modules';
 import imgLoading from '../loading.gif';
+import { appModule } from '../modules/app';
 
 const Posts = () => {
   const { request } = useActions();
   const { data, loading } = useSelectors(postsModule);
+  const { title } = useSelectors(appModule);
   const [postData, setPostData] = useState({});
+
+  useEffect(() => {
+    request({
+      action: Modules.app.actions.setTitle,
+      data: 'Posts Title'
+    })
+  }, [request]);
+
+  console.log(' title', title)
 
   const loadData = () => {
     request({
@@ -53,7 +64,10 @@ const Posts = () => {
 
   return (
     <div className="container">
-      <h1>react-sg-modules</h1>
+      <h1>{title}</h1>
+      <br />
+      <h2>react-sg-modules</h2>
+      <br />
       <div className="card-form">
         <input
           value={postData.title || ''}

@@ -13,8 +13,7 @@ const actions = {
     module: postsModule,
     name: 'getPosts',
     api: () => api.get('/posts'),
-    params: {
-      start: ['params'],
+    action: {
       error: ['error'],
       success: ['data'],
     },
@@ -24,8 +23,7 @@ const actions = {
     module: postsModule,
     name: 'addPost',
     api: (data) => api.post('/posts', data),
-    params: {
-      start: ['params'],
+    action: {
       error: ['error'],
       success: [''],
     },
@@ -35,8 +33,7 @@ const actions = {
     module: postsModule,
     name: 'editPost',
     api: (data) => api.put(`/posts/${data.id}`, data),
-    params: {
-      start: ['params'],
+    action: {
       error: ['error'],
       success: [''],
     },
@@ -46,8 +43,7 @@ const actions = {
     module: postsModule,
     name: 'removePost',
     api: (id) => api.delete(`/posts/${id}`),
-    params: {
-      start: ['params'],
+    action: {
       error: ['error'],
       success: [''],
     },
