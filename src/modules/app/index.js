@@ -2,15 +2,13 @@ export const appModule = 'app';
 
 const actions = {
   setTitle: {
-    module: appModule,
-    name: 'setTitle',
     action: {
       success: ['title'],
     },
   },
 };
 
-const app = {
+const app =  {
   actions,
   state: {
     title: 'My App',

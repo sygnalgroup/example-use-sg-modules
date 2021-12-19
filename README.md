@@ -40,8 +40,6 @@ const loadingStates = {
 
 const actions = {
   getPosts: {
-    module: postsModule,
-    name: 'getPosts',
     api: () => api.get('/posts'),
     action: {
       error: ['error'],
@@ -50,8 +48,6 @@ const actions = {
     state: loadingStates,
   },
   addPost: {
-    module: postsModule,
-    name: 'addPost',
     api: (data) => api.post('/posts', data),
     action: {
       error: ['error'],
@@ -60,8 +56,6 @@ const actions = {
     state: loadingStates,
   },
   editPost: {
-    module: postsModule,
-    name: 'editPost',
     api: (data) => api.put(`/posts/${data.id}`, data),
     action: {
       error: ['error'],
@@ -70,8 +64,6 @@ const actions = {
     state: loadingStates,
   },
   removePost: {
-    module: postsModule,
-    name: 'removePost',
     api: (id) => api.delete(`/posts/${id}`),
     action: {
       error: ['error'],
