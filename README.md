@@ -15,8 +15,7 @@ setApiBaseUrl('https://crudcrud.com/api/44b98a29e4904354a678f31350dcb501')
 
 [![NPM](https://img.shields.io/badge/react--sg--modules-sygnalgroup-green)](https://www.npmjs.com/package/@sygnalgroup/react-sg-modules) [![JavaScript Style Guide](https://img.shields.io/badge/code_style-standard-brightgreen.svg)](https://standardjs.com)
 
-
-SET API USE IN index.js
+Set api base url with setApiBaseUrl method
 
 To test you can get a new url in this site https://crudcrud.com
 
