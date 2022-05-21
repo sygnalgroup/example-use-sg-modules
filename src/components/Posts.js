@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { useActions, useSelectors } from '@sygnalgroup/react-sg-modules';
 import { postsModule } from '../modules/posts';
 import Modules from '../modules';
@@ -18,11 +18,11 @@ const Posts = () => {
     })
   }, [dispatch]);
 
-  const loadData = () => {
+  const loadData = useCallback(() => {
     dispatch({
       action: Modules.posts.actions.getPosts,
     })
-  }
+  }, [dispatch])
 
   const savePost = () => {
     dispatch({
@@ -58,13 +58,13 @@ const Posts = () => {
 
   useEffect(() => {
     loadData();
-  }, [])
+  }, [loadData])
 
   return (
     <div className="container">
       <h1>{title}</h1>
       <br />
-      <h2>react-sg-modules</h2>
+      <h2>SYGNALGROUP - react-sg-modules</h2>
       <br />
       <div className="card-form">
         <input
