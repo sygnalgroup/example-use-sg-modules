@@ -2,10 +2,23 @@
 
 > Example CRUD with packge react-sg-modules
 
+Run this project
+
+yarn install
+npm run start
+
+change the api url in index.js
+
+// https://crudcrud.com - YOU CAN CREATE A NEW URL IN THIS SITE
+setApiBaseUrl('https://crudcrud.com/api/44b98a29e4904354a678f31350dcb501')
+
+
 [![NPM](https://img.shields.io/badge/react--sg--modules-sygnalgroup-green)](https://www.npmjs.com/package/@sygnalgroup/react-sg-modules) [![JavaScript Style Guide](https://img.shields.io/badge/code_style-standard-brightgreen.svg)](https://standardjs.com)
 
 
 SET API USE IN index.js
+
+To test you can get a new url in this site https://crudcrud.com
 
 ```javascript
   import { setApiBaseUrl } from '@sygnalgroup/react-sg-modules'
