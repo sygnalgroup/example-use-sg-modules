@@ -1,19 +1,15 @@
 # example-react-sg-modules
 
+[![NPM](https://img.shields.io/badge/react--sg--modules-sygnalgroup-green)](https://www.npmjs.com/package/@sygnalgroup/react-sg-modules) [![JavaScript Style Guide](https://img.shields.io/badge/code_style-standard-brightgreen.svg)](https://standardjs.com)
+
 > Example CRUD with packge react-sg-modules
 
-Run this project
+RUN PROJECT
 
-yarn install
-npm run start
-
-change the api url in index.js
-
-// https://crudcrud.com - YOU CAN CREATE A NEW URL IN THIS SITE
-setApiBaseUrl('https://crudcrud.com/api/44b98a29e4904354a678f31350dcb501')
-
-
-[![NPM](https://img.shields.io/badge/react--sg--modules-sygnalgroup-green)](https://www.npmjs.com/package/@sygnalgroup/react-sg-modules) [![JavaScript Style Guide](https://img.shields.io/badge/code_style-standard-brightgreen.svg)](https://standardjs.com)
+```javascript
+  yarn install
+  npm run start
+```
 
 Set api base url with setApiBaseUrl method
 
@@ -35,7 +31,7 @@ ADD PROVIDER
 
 ```
 
-HOW USE
+EXPLAIN
 
 ## POSTS MODULE
 ```javascript
